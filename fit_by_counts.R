@@ -545,7 +545,8 @@ p1 <- as.data.frame(post_plate[[1]]) %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = factor(dil)), alpha = .5) +
   # geom_point(aes(x = time, y = count), data = d,
   #            inherit.aes = FALSE) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   theme_cowplot() +
   theme(legend.position = "top",
         legend.title = element_blank()) +
@@ -582,7 +583,8 @@ p2 <- as.data.frame(post_plate[[1]]) %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = factor(dil)), alpha = .5) +
   # geom_point(aes(x = time, y = count), data = d,
   #            inherit.aes = FALSE) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   theme_cowplot() +
   theme(legend.position = "top",
         legend.title = element_blank()) +
@@ -619,7 +621,8 @@ p3 <- as.data.frame(post_plate[[1]]) %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = factor(dil)), alpha = .5) +
   # geom_point(aes(x = time, y = count), data = d,
   #            inherit.aes = FALSE) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   theme_cowplot() +
   theme(legend.position = "top",
         legend.title = element_blank()) +
@@ -656,7 +659,8 @@ p4 <- as.data.frame(post_plate[[1]]) %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = factor(dil)), alpha = .5) +
   # geom_point(aes(x = time, y = count), data = d,
   #            inherit.aes = FALSE) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   theme_cowplot() +
   theme(legend.position = "top",
         legend.title = element_blank()) +
@@ -768,7 +772,8 @@ as.data.frame(post_plate_var[[1]]) %>%
              inherit.aes = FALSE) +
   # theme(legend.position = "none") +
   theme_cowplot() +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   xlab("Treatment time (min)") +
   ylab("Estimated microbial concentration in the media (CFU/ml)") +
   theme(legend.title = element_blank(),

@@ -4,6 +4,7 @@ library(readxl)
 library(rstan)
 library(coda)
 library(cowplot)
+library(wesanderson)
 
 ##
 
@@ -725,7 +726,8 @@ p1 <- as.data.frame(post_nonlinplate[[1]]) %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = factor(dil)), alpha = .5) +
   # geom_point(aes(x = time, y = count), data = d,
   #            inherit.aes = FALSE) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   theme_cowplot() +
   theme(legend.position = "top",
         legend.title = element_blank()) +
@@ -762,7 +764,8 @@ p2 <- as.data.frame(post_nonlinplate[[1]]) %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = factor(dil)), alpha = .5) +
   # geom_point(aes(x = time, y = count), data = d,
   #            inherit.aes = FALSE) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   theme_cowplot() +
   theme(legend.position = "top",
         legend.title = element_blank()) +
@@ -799,7 +802,8 @@ p3 <- as.data.frame(post_nonlinplate[[1]]) %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = factor(dil)), alpha = .5) +
   # geom_point(aes(x = time, y = count), data = d,
   #            inherit.aes = FALSE) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   theme_cowplot() +
   theme(legend.position = "top",
         legend.title = element_blank()) +
@@ -836,7 +840,8 @@ p4 <- as.data.frame(post_nonlinplate[[1]]) %>%
   geom_ribbon(aes(ymin = q05, ymax = q95, fill = factor(dil)), alpha = .5) +
   # geom_point(aes(x = time, y = count), data = d,
   #            inherit.aes = FALSE) +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   theme_cowplot() +
   theme(legend.position = "top",
         legend.title = element_blank()) +
@@ -944,11 +949,16 @@ post_nonlinplate_var <- As.mcmc.list(nonlinplate_var_model)
 # pairs(nonlinplate_var_model)
 # plot(post_nonlinplate_var)
 
+## supp. table 2
+
+summary(nonlinplate_var_model)$summary %>%
+  as_tibble(rownames = "parameter") %>%
+  write_excel_csv(file = "supp_Table_2.csv")
+
 ## Confidence interval in the media per repetition - Figure 6
 
 set.seed(24112)
 
-# my_c <- wes_palette("Darjeeling1", 3)
 my_c <- wes_palette("FantasticFox1", 3)
 
 as.data.frame(post_nonlinplate_var[[1]]) %>%
@@ -1001,13 +1011,14 @@ as.data.frame(post_nonlinplate_var[[1]]) %>%
               fill = my_c[3], colour = my_c[3]) + 
   # geom_line(aes(x = t, y = q50_3), colour = "blue") +
   geom_point(aes(x = time, y = count, colour = factor(day)),
-             data = d_var, shape = 1,
+             data = d_var, shape = 1, size = 3,
              inherit.aes = FALSE) +
   # theme(legend.position = "none") +
   theme_cowplot() +
-  scale_y_log10() +
+  scale_y_log10(breaks = c(1e0, 1e2, 1e4, 1e6, 1e8),
+                labels = fancy_scientific(c(1e0, 1e2, 1e4, 1e6, 1e8))) +
   xlab("Treatment time (min)") +
-  ylab("Count in the media (CFU/ml)") +
+  ylab("Estimated microbial concentration in the media (CFU/ml)") +
   theme(legend.title = element_blank(),
         legend.position = "top") +
   scale_color_manual(values = my_c) +
